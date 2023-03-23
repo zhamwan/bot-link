@@ -2,8 +2,11 @@ package ru.tinkoff.edu.java.linkParser.parsers;
 
 import ru.tinkoff.edu.java.linkParser.records.Result;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public abstract class AbstractParser {
-    AbstractParser nextParser;
+    private AbstractParser nextParser;
 
 
     public static AbstractParser link(AbstractParser first, AbstractParser... chain){
@@ -27,13 +30,12 @@ public abstract class AbstractParser {
     }
 
 
-    public String parsUrl(String url){
-        if(url.substring(0, 8).equals("https://")){
-            return url.substring(8);
+    public String parseUrl(String stringUrl){
+        try {
+            URL url = new URL(stringUrl);
+            return url.getHost() + url.getPath();
+        } catch (MalformedURLException e) {
+            return stringUrl;
         }
-        if(url.substring(0, 7).equals("http://")){
-            return url.substring(7);
-        }
-        return null;
     }
 }
