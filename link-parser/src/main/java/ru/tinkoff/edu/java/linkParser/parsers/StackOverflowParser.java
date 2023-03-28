@@ -7,10 +7,11 @@ public class StackOverflowParser extends AbstractParser{
 
     @Override
     public Result parse(String url) {
-        if(url == null && parsUrl(url) == null){
+        url = parseUrl(url);
+        if(url == null){
             return null;
         }
-        String[] dom = parsUrl(url).split("/");
+        String[] dom = url.split("/");
         if(dom.length == 4){
             if(dom[0].equals("stackoverflow.com") && dom[1].equals("questions")){
                 try {
